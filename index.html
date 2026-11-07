@@ -123,7 +123,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 
   <div style="background:#fff; color:#473050; padding:15px; max-width:300px; margin:20px auto; transform:rotate(-2deg); box-shadow:6px 6px 0 #a46bba;">
     <img id="souvenirPhoto" src="photo1.jpg" alt="Notre souvenir" style="width:100%; display:block;">
-    <p id="souvenirTexte" style="font-family:inherit; margin:15px 0 5px;">Souvenir n°1 💕</p>
+    <p id="souvenirTexte" style="font-family:inherit; margin:15px 0 5px;">Us loving love love love</p>
   </div>
 
   <button onclick="changerSouvenir(-1)">⬅️ Avant</button>
@@ -307,6 +307,14 @@ newGame();
 
 let souvenirActuel = 1;
 
+
+const petitsMots = [
+  "Notre premier souvenir... et le debut de tellement de bonheur 💗",
+  "Avec toi, meme les petits moments deviennent magiques ✨",
+  "Si je pouvais revivre un instant, ce serait un de ceux passes avec toi 💕",
+  "Et ce n'est que le debut de notre belle aventure... ❤️"
+];
+
 function changerSouvenir(direction) {
   souvenirActuel += direction;
 
@@ -317,11 +325,12 @@ function changerSouvenir(direction) {
     "photo" + souvenirActuel + ".jpg";
 
   document.getElementById("souvenirTexte").textContent =
-    "Souvenir n°" + souvenirActuel + " 💕";
+    petitsMots[souvenirActuel - 1];
 
   document.getElementById("numeroSouvenir").textContent =
     souvenirActuel + " / 4";
 }
+
 
 </script>
 </body>
