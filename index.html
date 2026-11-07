@@ -351,7 +351,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
       <button type="button" onclick="moveMaze(0,-1)" aria-label="Haut">▲</button>
       <div><button type="button" onclick="moveMaze(-1,0)" aria-label="Gauche">◀</button><button type="button" onclick="moveMaze(0,1)" aria-label="Bas">▼</button><button type="button" onclick="moveMaze(1,0)" aria-label="Droite">▶</button></div>
     </div>
-    <p class="maze-instructions">💗 Ramasse tous les cœurs · 🗝️ récupère la clé · 🚪 ouvre le passage · 👩‍🦰 retrouve-la !<br>Flèches / ZQSD / boutons tactiles · ⚡ Attention aux pièges !</p>
+    <p class="maze-instructions">💗 Ramasse tous les cœurs · 🗝️ récupère la clé · 🚪 ouvre le passage · 👩‍🦰 retrouve-la !<br>Flèches / ZQSD / boutons tactiles · ⚡ Pièges évitables dans les détours !</p>
     <button type="button" class="secondary" onclick="startMaze()">↻ RECOMMENCER LE NIVEAU</button>
   </div>
   <button type="button" class="secondary" onclick="show('menu')">↩ RETOUR AU MENU</button>
@@ -644,7 +644,30 @@ function startMaze(level=mazeLevel){
  const accessible=[];const queue=[[1,1]],seen=new Set(['1,1']);for(let i=0;i<queue.length;i++){
  const [x,y]=queue[i];for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy,k=mazeId(nx,ny);if(mazeGrid[ny]?.[nx]===0&&k!==mazeGate&&!seen.has(k)){seen.add(k);queue.push([nx,ny]);}}
  }for(const [x,y] of queue){const k=mazeId(x,y);if(k!=='1,1'&&k!==mazeEnd)accessible.push(k);}
- mazeShuffle(accessible);mazeHearts=new Set(accessible.splice(0,config.hearts));mazeKeyPos=accessible.shift()||'1,1';mazeTraps=new Set(accessible.splice(0,config.traps));
+ mazeShuffle(accessible);
+ mazeHearts=new Set(accessible.splice(0,config.hearts));
+ mazeKeyPos=accessible.shift()||'1,1';
+ // Les pièges sont uniquement dans des détours facultatifs :
+ // jamais sur le chemin obligatoire vers un cœur, la clé ou la sortie.
+ const safeCells=new Set(['1,1',mazeGate,mazeEnd,mazeKeyPos,...mazeHearts]);
+ const objectives=[...mazeHearts,mazeKeyPos,mazeGate];
+ for(const goal of objectives){
+   const q=[[1,1]],prev=new Map([['1,1',null]]);
+   for(let i=0;i<q.length;i++){
+     const [cx,cy]=q[i],here=mazeId(cx,cy);
+     if(here===goal)break;
+     for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){
+       const nx=cx+dx,ny=cy+dy,k=mazeId(nx,ny);
+       if(mazeGrid[ny]?.[nx]===0&&k!==mazeGate&&!prev.has(k)){
+         prev.set(k,here);q.push([nx,ny]);
+       }
+     }
+   }
+   let step=goal;
+   while(step!==null&&prev.has(step)){safeCells.add(step);step=prev.get(step);}
+ }
+ const optionalDetours=mazeShuffle(accessible.filter(k=>!safeCells.has(k)));
+ mazeTraps=new Set(optionalDetours.slice(0,config.traps));
  document.getElementById('mazeMessage').textContent='Niveau '+(mazeLevel+1)+' : trouve tous les cœurs et la clé ! 💗';renderMaze();
 }
 function renderMaze(){
@@ -672,7 +695,7 @@ function moveMaze(dx,dy){
  mazePlayer={x,y};mazeMoves++;mazeVisited.add(k);let msg='Continue, elle t’attend quelque part… 💕';
  if(mazeHearts.delete(k))msg='💗 Un cœur récupéré ! Encore '+mazeHearts.size+' à trouver !';
  if(k===mazeKeyPos){mazeHasKey=true;mazeKeyPos='';msg='🗝️ Tu as trouvé la clé !';}
- if(mazeTraps.delete(k)){mazePlayer={x:1,y:1};msg='⚡ OUPS ! Un piège t’a renvoyé au départ !';}
+ if(mazeTraps.delete(k)){mazePlayer={x:1,y:1};msg='⚡ OUPS ! Tu as exploré un détour piégé ! Retour au départ, mais tu gardes tes cœurs et ta clé 💗';}
  if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN PIXEL ! 💗';
  mazeHugTimer=setTimeout(()=>{if(!document.getElementById('retrouve').classList.contains('active'))return;
  if(mazeLevel<MAZE_LEVELS.length-1){document.getElementById('mazeMessage').textContent='💌 Niveau terminé ! Le prochain commence…';mazeHugTimer=setTimeout(()=>startMaze(mazeLevel+1),1300);}
