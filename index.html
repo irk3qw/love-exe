@@ -136,6 +136,14 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 .maze-levelbar span{padding:6px 10px;border:1px solid #bb85ca;border-radius:5px;font-size:11px;color:#d3b6e8}
 .maze-levelbar span.on{background:#ed91c5;color:#28152f;font-weight:bold}
 @media(max-width:410px){.maze-card{padding:12px 7px}.maze-controls button{min-width:50px;margin:3px}.maze-stat{font-size:9px;padding:6px 2px}}
+
+.hug-boy,.hug-girl{display:block;width:90px;height:140px;position:relative;z-index:2}
+.hug-boy{animation:boyHug 2s ease-out forwards}.hug-girl{animation:girlHug 2s ease-out forwards}
+.hug-boy img,.hug-girl img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+#heartRain span{position:absolute;top:-25px;font-size:20px;animation:rainHeart 3s linear infinite}
+@keyframes boyHug{from{transform:translateX(-100px)}to{transform:translateX(10px)}}
+@keyframes girlHug{from{transform:translateX(100px)}to{transform:translateX(-10px)}}
+@keyframes rainHeart{to{transform:translateY(260px);opacity:0}}
 </style>
 </head>
 <body>
@@ -233,7 +241,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 
 <section id="photos" class="screen">
   <h2>📸 NOS SOUVENIRS</h2>
-  <p>Some moments of us</p>
+  <p>Quelques moments avec toi 💗</p>
 
   <div style="background:#fff; color:#473050; padding:15px; max-width:300px; margin:20px auto; transform:rotate(-2deg); box-shadow:6px 6px 0 #a46bba;">
     <img id="souvenirPhoto" src="photo1.jpg" alt="Notre souvenir" style="width:100%; display:block;">
@@ -274,32 +282,35 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
   <button class="secondary" onclick="show('menu')">← MENU</button>
 </section>
 
-<!-- SECRET LEVEL -->
+<!-- CADEAU FINAL -->
 <section id="secret" class="screen">
-  <h1 class="pixel">SECRET LEVEL</h1>
-  <p class="small">★ CONGRATULATIONS PLAYER 2 ★</p>
-
-  <div class="card">
-    <div style="font-size:75px">🎁</div>
-    <h2 class="pixel">YOU FOUND THE TREASURE!</h2>
-    <p>Tu as réussi à trouver notre petit niveau secret...</p>
-    <p>Mais ton cadeau n'est pas encore ouvert !</p>
-    <button onclick="revealSecret()">🎀 OPEN MY GIFT</button>
-
-    <div id="giftContent" style="display:none">
-      <div class="heart">💗</div>
-      <h2>YOU ARE MY FAVORITE PERSON</h2>
-      <p>C'est toi que j'aimerais toujours.</p>
-      <p>Merci pour tous nos souvenirs, nos fous rires et tous les moments à venir.</p>
-      <p class="pixel small">ACHIEVEMENT UNLOCKED</p>
-      <p>🏆 MY FAVORITE HUMAN 🏆</p>
-      <div style="font-size:35px">💗🌸💗🌸💗</div>
+ <h1 class="pixel">SECRET LEVEL 💌</h1>
+ <p class="small">★ ACHIEVEMENT UNLOCKED: YOU FOUND MY HEART ★</p>
+ <div class="card">
+  <button id="giftEnvelope" onclick="revealSecret()" style="font-size:25px;padding:30px">💌<br>OPEN MY LETTER</button>
+  <div id="giftContent" style="display:none;max-width:620px;margin:20px auto;background:#fff1f4;color:#472c50;border:3px solid #ff8fbd;border-radius:15px;padding:24px;line-height:1.8">
+   <h2 class="pixel" style="color:#ae568c">💌 TO MY PLAYER 2 ♡</h2>
+   <p><b>ACHIEVEMENT UNLOCKED: YOU FOUND MY HEART 💗</b></p>
+   <p>Mon amour,</p>
+   <p>Si tu lis cette lettre, c'est que tu as réussi à me retrouver, même à travers tous ces labyrinthes.</p>
+   <p>Et tu sais quoi ? Dans la vraie vie, je suis tellement heureuse qu'on se soit trouvés aussi.</p>
+   <p>J'ai créé ce petit jeu pour toi parce que ça me fait plaisir et c'est fun!</p>
+   <p>J'aime nos fous rires, nos moments ensemble, nos petites habitudes et tous ces souvenirs qu'on continue de créer.</p>
+   <p>Même si on devait recommencer notre histoire mille fois, je te choisirais à chaque partie.</p>
+   <p><b>TO BE CONTINUED... WITH YOU ♡</b></p>
+   <p style="font-size:23px;color:#ac4185"><b>Je t'aime à la pookie</b></p>
+   <button onclick="playFinalHug()">♡ ONE LAST HUG ♡</button>
+   <div id="finalHug" style="display:none;position:relative;overflow:hidden;background:#2b1b3d;border-radius:14px;margin-top:20px;padding:18px;color:#ffd1eb">
+    <div style="display:flex;justify-content:center;align-items:end;height:150px">
+     <span id="finalBoy" class="hug-boy"></span><span id="finalGirl" class="hug-girl"></span>
     </div>
+    <div style="font-size:34px">💗</div><p class="pixel small">TOGETHER FOREVER ♡</p>
+    <div id="heartRain" style="position:absolute;inset:0;pointer-events:none;overflow:hidden"></div>
+   </div>
   </div>
-
-  <button class="secondary" onclick="show('menu')">← BACK TO MENU</button>
+ </div>
+ <button class="secondary" onclick="show('menu')">← BACK TO MENU</button>
 </section>
-
 
 <section id="cadeaux" class="screen">
   <h1 class="pixel">LOVE CLAW 💗</h1>
@@ -354,7 +365,7 @@ const startDate = "2025-08-27"; // Remplace par votre date de rencontre
 const questions = [
  {q:"Qu'es-ce que je préfère chez toi ?",a:["Ton sourire","Tes yeux","Le fait que tu es bientôt chauve","Your fat-assss"],correct:0},
  {q:"Quel est le premier film qu'on regardé tout les deux ?",a:["FNAF","Zoolander","Carrie","Panique au village!"],correct:2},
- {q:"Qui a fait le premier pas ?",a:["Toi","Moi (fais gaffe à ce que tu réponds)","Les deux"],correct:1},
+ {q:"Qui a fait le premier pas ?",a:["Toi","Moi (fais gaffe à ce que tu réponds)","Les deux"],correct:2},
  {q:"Quel est mon moment préféré ?",a:["Nos conversations","Nos rendez-vous","Nos fous rires","Tous les moments avec toi"],correct:3},
 ];
 
@@ -406,6 +417,7 @@ function startLoveLoading() {
 
 function show(id) {
   if (!loveAccessGranted && id !== 'access') return;
+  if(id==='secret'&&!unlocked){alert('🔒 Termine les 3 niveaux de RETROUVE-MOI ! pour débloquer le cadeau !');return;}
   document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active');
   });
@@ -420,7 +432,7 @@ function showScreen(id) {
 
 function showSecret(){
  if(unlocked) show('secret');
- else alert("🔒 Termine d'abord le LOVE QUIZ !");
+ else alert('🔒 Termine les 3 niveaux de RETROUVE-MOI ! pour débloquer le cadeau !');
 }
 function renderQuestion(){
  const q=questions[current];
@@ -453,10 +465,9 @@ function checkAnswer(i,button){
 function nextQuestion(){
  current++;
  if(current>=questions.length){
-  unlocked=true;
   document.getElementById('question').textContent=`QUIZ TERMINÉ ! ${score}/${questions.length} 💗`;
   document.getElementById('answers').innerHTML='';
-  document.getElementById('feedback').textContent="Tu as débloqué le niveau secret !";
+  document.getElementById('feedback').textContent="Quiz terminé ! Bravo 💗";
   document.getElementById('next').style.display='none';
   document.getElementById('fill').style.width='100%';
   return;
@@ -550,7 +561,7 @@ const cadeauxLove = [
   "🧸 BON POUR UN GROS CÂLIN !",
   "🍿 UNE SOIRÉE FILM EN AMOUREUX !",
   "💆 BON POUR UN MASSAGE !",
-  "🍕 UN DATE PIZZA DE TON CHOIX !",
+  "🍕 UN DATE PIZZA AVEC MOI !",
   "❤️ UN JE T'AIME INFINI !",
   "🎮 UNE SOIRÉE GAMING ENSEMBLE !"
 ];
@@ -662,10 +673,10 @@ function moveMaze(dx,dy){
  if(mazeHearts.delete(k))msg='💗 Un cœur récupéré ! Encore '+mazeHearts.size+' à trouver !';
  if(k===mazeKeyPos){mazeHasKey=true;mazeKeyPos='';msg='🗝️ Tu as trouvé la clé !';}
  if(mazeTraps.delete(k)){mazePlayer={x:1,y:1};msg='⚡ OUPS ! Un piège t’a renvoyé au départ !';}
- if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN D'AMOUR A LA POOKIE ! 💗';
+ if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN PIXEL ! 💗';
  mazeHugTimer=setTimeout(()=>{if(!document.getElementById('retrouve').classList.contains('active'))return;
  if(mazeLevel<MAZE_LEVELS.length-1){document.getElementById('mazeMessage').textContent='💌 Niveau terminé ! Le prochain commence…';mazeHugTimer=setTimeout(()=>startMaze(mazeLevel+1),1300);}
- else document.getElementById('mazeMessage').innerHTML='🏆 LOVE QUEST COMPLETE ! 💗<br>🫂 Vous vous retrouvez pour un câlin éternel !<br>♡ TOGETHER FOREVER ♡';
+ else {unlocked=true;document.getElementById('mazeMessage').innerHTML='🏆 LOVE QUEST COMPLETE ! 💗<br>♡ TOGETHER FOREVER ♡<br>💌 Le cadeau final est débloqué !';setTimeout(()=>show('secret'),1700);}
  },2100);}
  document.getElementById('mazeMessage').textContent=msg;renderMaze();
 }
@@ -677,6 +688,21 @@ document.addEventListener('keydown',event=>{
 // Glisser sur le labyrinthe fonctionne aussi sur téléphone.
 let mazeTouch=null;document.getElementById('mazeBoard').addEventListener('touchstart',e=>{mazeTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
 document.getElementById('mazeBoard').addEventListener('touchend',e=>{if(!mazeTouch)return;const dx=e.changedTouches[0].clientX-mazeTouch.x,dy=e.changedTouches[0].clientY-mazeTouch.y;mazeTouch=null;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;if(Math.abs(dx)>Math.abs(dy))moveMaze(Math.sign(dx),0);else moveMaze(0,Math.sign(dy));},{passive:true});
+
+function revealSecret(){
+ if(!unlocked)return;
+ document.getElementById('giftEnvelope').style.display='none';
+ document.getElementById('giftContent').style.display='block';
+}
+function playFinalHug(){
+ const box=document.getElementById('finalHug');
+ box.style.display='block';
+ document.getElementById('finalBoy').innerHTML=mazeBoyHTML;
+ document.getElementById('finalGirl').innerHTML=mazeGirlHTML;
+ const rain=document.getElementById('heartRain');rain.replaceChildren();
+ for(let i=0;i<22;i++){const h=document.createElement('span');h.textContent=i%3?'💗':'💕';h.style.left=(i*47%100)+'%';h.style.animationDelay=(i*.17)+'s';rain.appendChild(h);}
+ box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
 </script>
   
 
