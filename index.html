@@ -696,7 +696,7 @@ function moveMaze(dx,dy){
  if(mazeHearts.delete(k))msg='💗 Un cœur récupéré ! Encore '+mazeHearts.size+' à trouver !';
  if(k===mazeKeyPos){mazeHasKey=true;mazeKeyPos='';msg='🗝️ Tu as trouvé la clé !';}
  if(mazeTraps.delete(k)){mazePlayer={x:1,y:1};msg='⚡ OUPS ! Tu as exploré un détour piégé ! Retour au départ, mais tu gardes tes cœurs et ta clé 💗';}
- if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN PIXEL ! 💗';
+ if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN D'AMOUR A LA POOKIE ! 💗';
  mazeHugTimer=setTimeout(()=>{if(!document.getElementById('retrouve').classList.contains('active'))return;
  if(mazeLevel<MAZE_LEVELS.length-1){document.getElementById('mazeMessage').textContent='💌 Niveau terminé ! Le prochain commence…';mazeHugTimer=setTimeout(()=>startMaze(mazeLevel+1),1300);}
  else {unlocked=true;document.getElementById('mazeMessage').innerHTML='🏆 LOVE QUEST COMPLETE ! 💗<br>♡ TOGETHER FOREVER ♡<br>💌 Le cadeau final est débloqué !';setTimeout(()=>show('secret'),1700);}
