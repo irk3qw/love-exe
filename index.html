@@ -99,6 +99,10 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
     <p>Termine le quiz pour découvrir la surprise !</p>
     <button class="secondary" onclick="showSecret()">🔒 UNLOCK</button>
   </div>
+  
+<button onclick="showScreen('cadeaux')">🎁 MACHINE À CADEAUX</button>
+<button onclick="showScreen('connais')">💌 TU ME CONNAIS ?</button>
+
 </section>
 
 <!-- QUIZ -->
@@ -309,10 +313,10 @@ let souvenirActuel = 1;
 
 
 const petitsMots = [
-  "Notre premier souvenir... et le debut de tellement de bonheur 💗",
-  "Avec toi, meme les petits moments deviennent magiques ✨",
-  "Si je pouvais revivre un instant, ce serait un de ceux passes avec toi 💕",
-  "Et ce n'est que le debut de notre belle aventure... ❤️"
+  "Us loving love love love",
+  "My favorite boiiiii",
+  "And that perfect smile damn",
+  "In movie theater... again"
 ];
 
 function changerSouvenir(direction) {
@@ -332,6 +336,45 @@ function changerSouvenir(direction) {
 }
 
 
+const cadeauxLove = [
+  "💋 BON POUR 10 BISOUS !",
+  "🧸 BON POUR UN GROS CALIN !",
+  "🍿 UNE SOIREE FILM EN AMOUREUX !",
+  "💆 BON POUR UN MASSAGE !",
+  "🍕 UN DATE PIZZA AVEC MOI !",
+  "❤️ UN JE T'AIME INFINI !",
+  "🎮 UNE SOIREE GAMING ENSEMBLE !"
+];
+
+function tirerCadeau() {
+  const numero = Math.floor(
+    Math.random() * cadeauxLove.length
+  );
+
+  document.getElementById("cadeauResultat")
+    .textContent = cadeauxLove[numero];
+}
+
 </script>
+  
+<section id="cadeaux" class="screen">
+  <h2>🎁 LOVE GACHA 🎁</h2>
+  <p>Une surprise t'attend, mon amour ! 💗</p>
+
+  <div style="font-size:70px; margin:25px;">
+    🕹️🎁
+  </div>
+
+  <p id="cadeauResultat">Appuie pour gagner !</p>
+
+  <button onclick="tirerCadeau()">
+    💕 TENTER MA CHANCE
+  </button>
+
+  <button onclick="showScreen('menu')">
+    ↩ RETOUR
+  </button>
+</section>
+
 </body>
 </html>
