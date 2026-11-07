@@ -241,7 +241,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 
 <section id="photos" class="screen">
   <h2>📸 NOS SOUVENIRS</h2>
-  <p>Quelques moments avec toi 💗</p>
+  <p>Some moments of us</p>
 
   <div style="background:#fff; color:#473050; padding:15px; max-width:300px; margin:20px auto; transform:rotate(-2deg); box-shadow:6px 6px 0 #a46bba;">
     <img id="souvenirPhoto" src="photo1.jpg" alt="Notre souvenir" style="width:100%; display:block;">
@@ -291,7 +291,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
   <div id="giftContent" style="display:none;max-width:620px;margin:20px auto;background:#fff1f4;color:#472c50;border:3px solid #ff8fbd;border-radius:15px;padding:24px;line-height:1.8">
    <h2 class="pixel" style="color:#ae568c">💌 TO MY PLAYER 2 ♡</h2>
    <p><b>ACHIEVEMENT UNLOCKED: YOU FOUND MY HEART 💗</b></p>
-   <p>Mon amour,</p>
+   <p>Ma pookiiiie,</p>
    <p>Si tu lis cette lettre, c'est que tu as réussi à me retrouver, même à travers tous ces labyrinthes.</p>
    <p>Et tu sais quoi ? Dans la vraie vie, je suis tellement heureuse qu'on se soit trouvés aussi.</p>
    <p>J'ai créé ce petit jeu pour toi parce que ça me fait plaisir et c'est fun!</p>
@@ -337,7 +337,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 
 <section id="retrouve" class="screen">
   <h2>🧩 RETROUVE-MOI ! 💗</h2>
-  <p>Une aventure en 3 niveaux pour retrouver ton amoureuse !</p>
+  <p>Une aventure en 3 niveaux pour retrouver ta pookie !</p>
   <div class="card maze-card">
     <div class="maze-levelbar" id="mazeLevels"><span class="on">🌸 JARDIN</span><span>🌙 NUIT</span><span>💎 CHÂTEAU</span></div>
     <div class="maze-hud">
@@ -365,7 +365,7 @@ const startDate = "2025-08-27"; // Remplace par votre date de rencontre
 const questions = [
  {q:"Qu'es-ce que je préfère chez toi ?",a:["Ton sourire","Tes yeux","Le fait que tu es bientôt chauve","Your fat-assss"],correct:0},
  {q:"Quel est le premier film qu'on regardé tout les deux ?",a:["FNAF","Zoolander","Carrie","Panique au village!"],correct:2},
- {q:"Qui a fait le premier pas ?",a:["Toi","Moi (fais gaffe à ce que tu réponds)","Les deux"],correct:2},
+ {q:"Qui a fait le premier pas ?",a:["Toi","Moi (fais gaffe à ce que tu réponds)","Les deux"],correct:1},
  {q:"Quel est mon moment préféré ?",a:["Nos conversations","Nos rendez-vous","Nos fous rires","Tous les moments avec toi"],correct:3},
 ];
 
@@ -407,7 +407,7 @@ function startLoveLoading() {
   loadingTimer = setInterval(() => {
     const progress = Math.min(100, Math.round((performance.now() - start) / 7000 * 100));
     percent.textContent = progress + '%';
-    if (progress >= 76) message.textContent = '♡ BIG PIXEL HUG! ♡';
+    if (progress >= 76) message.textContent = '♡ BIG HUG! ♡';
     if (progress === 100) {
       clearInterval(loadingTimer);
       setTimeout(() => show('home'), 1100);
@@ -561,7 +561,7 @@ const cadeauxLove = [
   "🧸 BON POUR UN GROS CÂLIN !",
   "🍿 UNE SOIRÉE FILM EN AMOUREUX !",
   "💆 BON POUR UN MASSAGE !",
-  "🍕 UN DATE PIZZA AVEC MOI !",
+  "🍕 UN DATE DE TON CHOIX !",
   "❤️ UN JE T'AIME INFINI !",
   "🎮 UNE SOIRÉE GAMING ENSEMBLE !"
 ];
