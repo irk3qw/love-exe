@@ -233,7 +233,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 
 <section id="photos" class="screen">
   <h2>📸 NOS SOUVENIRS</h2>
-  <p>Quelques moments avec toi 💗</p>
+  <p>Some moments of us</p>
 
   <div style="background:#fff; color:#473050; padding:15px; max-width:300px; margin:20px auto; transform:rotate(-2deg); box-shadow:6px 6px 0 #a46bba;">
     <img id="souvenirPhoto" src="photo1.jpg" alt="Notre souvenir" style="width:100%; display:block;">
@@ -289,7 +289,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
     <div id="giftContent" style="display:none">
       <div class="heart">💗</div>
       <h2>YOU ARE MY FAVORITE PERSON</h2>
-      <p>Parmi tous les joueurs de ce monde, c'est toi que je choisirais à chaque partie.</p>
+      <p>C'est toi que j'aimerais toujours.</p>
       <p>Merci pour tous nos souvenirs, nos fous rires et tous les moments à venir.</p>
       <p class="pixel small">ACHIEVEMENT UNLOCKED</p>
       <p>🏆 MY FAVORITE HUMAN 🏆</p>
@@ -354,7 +354,7 @@ const startDate = "2025-08-27"; // Remplace par votre date de rencontre
 const questions = [
  {q:"Qu'es-ce que je préfère chez toi ?",a:["Ton sourire","Tes yeux","Le fait que tu es bientôt chauve","Your fat-assss"],correct:0},
  {q:"Quel est le premier film qu'on regardé tout les deux ?",a:["FNAF","Zoolander","Carrie","Panique au village!"],correct:2},
- {q:"Qui a fait le premier pas ?",a:["Toi","Moi (fais gaffe à ce que tu réponds)","Les deux"],correct:2},
+ {q:"Qui a fait le premier pas ?",a:["Toi","Moi (fais gaffe à ce que tu réponds)","Les deux"],correct:1},
  {q:"Quel est mon moment préféré ?",a:["Nos conversations","Nos rendez-vous","Nos fous rires","Tous les moments avec toi"],correct:3},
 ];
 
@@ -550,7 +550,7 @@ const cadeauxLove = [
   "🧸 BON POUR UN GROS CÂLIN !",
   "🍿 UNE SOIRÉE FILM EN AMOUREUX !",
   "💆 BON POUR UN MASSAGE !",
-  "🍕 UN DATE PIZZA AVEC MOI !",
+  "🍕 UN DATE PIZZA DE TON CHOIX !",
   "❤️ UN JE T'AIME INFINI !",
   "🎮 UNE SOIRÉE GAMING ENSEMBLE !"
 ];
@@ -662,7 +662,7 @@ function moveMaze(dx,dy){
  if(mazeHearts.delete(k))msg='💗 Un cœur récupéré ! Encore '+mazeHearts.size+' à trouver !';
  if(k===mazeKeyPos){mazeHasKey=true;mazeKeyPos='';msg='🗝️ Tu as trouvé la clé !';}
  if(mazeTraps.delete(k)){mazePlayer={x:1,y:1};msg='⚡ OUPS ! Un piège t’a renvoyé au départ !';}
- if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN PIXEL ! 💗';
+ if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN D'AMOUR A LA POOKIE ! 💗';
  mazeHugTimer=setTimeout(()=>{if(!document.getElementById('retrouve').classList.contains('active'))return;
  if(mazeLevel<MAZE_LEVELS.length-1){document.getElementById('mazeMessage').textContent='💌 Niveau terminé ! Le prochain commence…';mazeHugTimer=setTimeout(()=>startMaze(mazeLevel+1),1300);}
  else document.getElementById('mazeMessage').innerHTML='🏆 LOVE QUEST COMPLETE ! 💗<br>🫂 Vous vous retrouvez pour un câlin éternel !<br>♡ TOGETHER FOREVER ♡';
