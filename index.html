@@ -111,6 +111,31 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 @media(max-width:430px){.loading-stage{height:205px}.chibi{width:88px;height:135px}.loading-panel{padding:18px 9px}.meet-heart{font-size:32px}@keyframes boyMeet{0%,8%{left:0}76%,100%{left:calc(50% - 73px)}}@keyframes girlMeet{0%,8%{right:0}76%,100%{right:calc(50% - 73px)}}}
 @media(prefers-reduced-motion:reduce){.chibi,.meet-heart,.loading-fill,.chibi .feet{animation-duration:.01ms;animation-iteration-count:1}}
 
+
+/* RETROUVE-MOI ! : aventure pixel en trois niveaux */
+.maze-card{max-width:680px;margin:16px auto;background:linear-gradient(150deg,#352248,#20182f);border:3px solid #e8a0d9}
+.maze-hud{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}
+.maze-stat{background:#4a315f;border:2px solid #926bb1;border-radius:8px;padding:8px 4px;color:#ffe4f2;font-size:11px;font-weight:900}
+.maze-board{display:grid;width:min(100%,490px);aspect-ratio:1;margin:10px auto;border:5px solid #eaa0d7;background:#21182f;box-shadow:6px 6px 0 #8160ae;overflow:hidden;position:relative;touch-action:none}
+.maze-cell{min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;line-height:1;position:relative;font-size:clamp(10px,2.5vw,20px)}
+.maze-wall{background:#9469bd;box-shadow:inset 2px 2px #c5a3e9,inset -2px -2px #654681}
+.maze-path{background:#332443;color:#725687}
+.maze-visited{background:#423052}
+.maze-player{background:#655080}
+.maze-avatar{width:100%;height:100%;display:block;z-index:2}
+.maze-avatar img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(1px 1px 0 #20152b)}
+.maze-object{font-size:clamp(9px,2.8vw,21px);filter:drop-shadow(1px 1px 0 #26162d)}
+.maze-gate{background:#8e5b83}
+.maze-message{min-height:50px;font-weight:900;color:#ffb8da;line-height:1.7}
+.maze-controls button{min-width:58px;min-height:46px;padding:10px;font-size:17px;touch-action:manipulation}
+.maze-controls>div{display:flex;justify-content:center}
+.maze-instructions{font-size:12px;color:#ffe1ef;line-height:1.7}
+.maze-celebrate{position:relative;animation:mazePulse .6s ease-in-out infinite alternate}
+@keyframes mazePulse{from{transform:scale(1)}to{transform:scale(1.12)}}
+.maze-levelbar{display:flex;justify-content:center;gap:8px;margin:10px auto}
+.maze-levelbar span{padding:6px 10px;border:1px solid #bb85ca;border-radius:5px;font-size:11px;color:#d3b6e8}
+.maze-levelbar span.on{background:#ed91c5;color:#28152f;font-weight:bold}
+@media(max-width:410px){.maze-card{padding:12px 7px}.maze-controls button{min-width:50px;margin:3px}.maze-stat{font-size:9px;padding:6px 2px}}
 </style>
 </head>
 <body>
@@ -186,7 +211,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
   </div>
   
 <button onclick="showScreen('cadeaux')">🎁 MACHINE À CADEAUX</button>
-<button onclick="showScreen('connais')">💌 TU ME CONNAIS ?</button>
+<button onclick="showScreen('retrouve')">🧩 RETROUVE-MOI !</button>
 
 </section>
 
@@ -299,21 +324,26 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
   <button class="secondary" onclick="show('menu')">↩ RETOUR</button>
 </section>
 
-<section id="connais" class="screen">
-  <h2>💌 PLAYER 2 QUIZ 💌</h2>
-  <p>À quel point tu me connais ? 🎮</p>
-
-  <h3 id="questionAmour"></h3>
-  <div id="reponsesAmour"></div>
-  <p id="scoreAmour"></p>
-
-  <button onclick="demarrerQuizAmour()">
-    ↻ RECOMMENCER
-  </button>
-
-  <button onclick="showScreen('menu')">
-    ↩ RETOUR
-  </button>
+<section id="retrouve" class="screen">
+  <h2>🧩 RETROUVE-MOI ! 💗</h2>
+  <p>Une aventure en 3 niveaux pour retrouver ton amoureuse !</p>
+  <div class="card maze-card">
+    <div class="maze-levelbar" id="mazeLevels"><span class="on">🌸 JARDIN</span><span>🌙 NUIT</span><span>💎 CHÂTEAU</span></div>
+    <div class="maze-hud">
+      <div class="maze-stat">💗 CŒURS<br><span id="mazeHearts">0 / 0</span></div>
+      <div class="maze-stat">🗝️ CLÉ<br><span id="mazeKey">À TROUVER</span></div>
+      <div class="maze-stat">👣 PAS<br><span id="mazeSteps">0</span></div>
+    </div>
+    <div id="mazeBoard" class="maze-board" aria-label="Labyrinthe interactif"></div>
+    <p id="mazeMessage" class="maze-message" aria-live="polite">Ramasse les cœurs et trouve la clé ! 💕</p>
+    <div class="maze-controls" aria-label="Commandes du labyrinthe">
+      <button type="button" onclick="moveMaze(0,-1)" aria-label="Haut">▲</button>
+      <div><button type="button" onclick="moveMaze(-1,0)" aria-label="Gauche">◀</button><button type="button" onclick="moveMaze(0,1)" aria-label="Bas">▼</button><button type="button" onclick="moveMaze(1,0)" aria-label="Droite">▶</button></div>
+    </div>
+    <p class="maze-instructions">💗 Ramasse tous les cœurs · 🗝️ récupère la clé · 🚪 ouvre le passage · 👩‍🦰 retrouve-la !<br>Flèches / ZQSD / boutons tactiles · ⚡ Attention aux pièges !</p>
+    <button type="button" class="secondary" onclick="startMaze()">↻ RECOMMENCER LE NIVEAU</button>
+  </div>
+  <button type="button" class="secondary" onclick="show('menu')">↩ RETOUR AU MENU</button>
 </section>
 <footer>LOVE.exe · VERSION 1.0 · MADE WITH ♡</footer>
 
@@ -385,7 +415,7 @@ function show(id) {
 
 function showScreen(id) {
   show(id);
-  if (id === "connais") demarrerQuizAmour();
+  if (id === "retrouve") startMaze(0);
 }
 
 function showSecret(){
@@ -576,73 +606,77 @@ document.addEventListener('keydown', function(e) {
 });
 placerPince();
 
-const questionsAmour = [
-  {
-    question: "Quelle est ma soirée idéale ? 💕",
-    reponses: ["Un film ensemble", "Une soirée seule", "Faire du sport"],
-    bonne: 0
-  },
-  {
-    question: "Quel cadeau me ferait le plus plaisir ? 🎁",
-    reponses: ["Un moment avec toi", "Une voiture", "Une console"],
-    bonne: 0
-  },
-  {
-    question: "Qu'est-ce que je préfère ? 💗",
-    reponses: ["Les câlins", "Les disputes", "Les devoirs"],
-    bonne: 0
-  },
-  {
-    question: "Quel est mon endroit préféré ? 🌷",
-    reponses: ["Avec toi", "Au supermarché", "Dans le bus"],
-    bonne: 0
-  }
-];
-
-let questionActuelle = 0;
-let scoreQuizAmour = 0;
-
-function demarrerQuizAmour() {
-  questionActuelle = 0;
-  scoreQuizAmour = 0;
-  afficherQuestionAmour();
+// RETROUVE-MOI : 3 niveaux, objets, porte, pièges et câlin final.
+const MAZE_LEVELS=[{name:'JARDIN',size:11,hearts:3,traps:1},{name:'NUIT',size:15,hearts:5,traps:2},{name:'CHÂTEAU',size:19,hearts:7,traps:3}];
+const mazeBoyHTML='<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABgCAYAAACtxXToAAAC00lEQVR4nO2cP2sUURTFr8HYRWQjYgqbMIQ0go6CjTrgh9AiaaysgmAhbGFlEbAQJJWVzTb6IYRVGwNRISBLkDQWEdFFtLNwbByzO9mZeXPfnTkD7/yqJG/enZOTe9998ycrQgghhBBCCAmRYxZB4ihJfea/+zQ00aHhuFWgG8s/VfNe7p+0kqDCzABffLMoo2421TbASuismNosytBkkyoDVnvfp74fjRc1Yabi+cbQMgc5a4egAWgBaMy6QLYArV2ut0au9VIR6cml5VREFkRE5GD8y0pWJSYGTC+KPYuQrdGZfcAkbW6OnAzI9/6ilpVvj1rqxhmNF9XbaecMqBKF6uMZcZSkGhPYBawD7uyPrUM2SvAZELwBpiWAXgg1mBow3LplGa4WycZz1bzgS4AGoAWgoQFoAWicu0BRi0vn/22/50Wu33vhfOJXj28e+Vmd+VWxXHEyIH+REUdJmrU8reiuYLYPeP1sw+m4a7e3Wo1VBeyGSFcyp1EDrq4/+f/1m8FdWIwy2AVQJ7bsAj4wA5oMblGzTdT9JGYGWLSkJmJVwRLwDeCzDW0ylivMAO3Er3sHIiJy6s/ZwmNOrB5eQjx49PTI+MP7d5zHRUR+j2Y/eP0x96VcbAnMAOTJZ/3V28bbgMn0O7OyVHhcPp1dUj5PVlJZ+VkAy4CqX7Ytgl8DgjdAXQJl9d40ludmBmgnap/FdQ2nV0qq3g9e39wsHLty8VxNSYe8ff+5dHzQ75eOu7wy45wBRU9+0Zngqyv4NYAGoAWgoQFoAWhoAFoAGhqAFoCGBqAFoKEBaAFoTG6Kbu9+VI11AWaA64Ho6/4ifHWpP7ggjpK07E5Qmwz6ffV/jQVfAl4ZYCnEF20GmH12Rxwl6enzSeVx33aHhWItYtQl+BKgAWgBaGgAWgCa4A3waiUXVvR7gQ97023MMlYdgs8AGoAWgIYGoAUQQqD8BSLfu3aanKzZAAAAAElFTkSuQmCC" alt="Garçon en pixel art">';
+const mazeGirlHTML='<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABgCAYAAACtxXToAAAD50lEQVR4nO2cQWsTQRTH/63WU02kVLH2GqIgiuSgF3VBDxbxbEG8+AGCILb4EUIVQfIBvIjQnjyICGIh1YtFRRRBg1eNaBWj9SLUeIibTrMzO292Xnay7PxOye7Mm+l/33vzdiYU8Hg8Ho/H4/F4cslIGoNUSkHHpP3LD41U5gWkKMD1qZ/adnOtgpFdDqG22xowebrHDu+TXn/2+lPvM0UowFwsFdYCAPpJm06WIhQXLAIA6U6ak1HXE3ANmwdQ4PAGMZwo+UeXKFMVgIpOKM5EySZA2rHOlXPIApgWM1nByANkrse1HrvCOAQirtdaBwAcnN6p7PNgugNg8/7Z56lVulqcJMFrxe8AgFp7IvKd6lFcOYdFgLlW4f9TphH+4arvaWItwMqZcQDA+rdf5D6N+mzi8YLqYuK+MowFULleXA4YZnwpzGXo7cfNEJhrFazcXAfn0juUpXAcKmGD6mJvNQG6iZWyYZI5AUJkybB/NVFVr6IwWgFEI8NW9Zm8FPXXHiEkDzAZaJCxL8P2pYgcAlnd8dGR+2Uw9wJYrwJX14qbX8aAk1eWSP1Wbp6PXKP27Y410h17+TduTLbp/fogC6CO9aLiejZgqwOe3K6S2p24VE/Vlg5nhZCRuw+QgQpw/OKt3uendy47sxFHZkthEZsKlSRA7ABjyQa2XgUEGvVZ7UaJWAKL5X2sAHFb4WHJOyyxDHRfciqloCO+FcZRa0/oPUBmjLqHxxGzSW2c3r9bee/x+6+9z6QQ6DdWW92ItOFYkgZhS4cvhW0NyJLZMNii4j0gaccvzRYAYNffvco2Ow7wHoH9eSdflH6Mfo5cExNdHCQBosbcneRw40PA1oDofnvKU6Q+9+82lffOXSgr74UhFYYfB94DdA0GcXIb95RtCEt3kzmTQqC/HHZ5nB2HyTtAeDgSK0D4cgFsLYdrqxvkeB8EcWNT3wFCfA5I2pH7hwquSCTAo6PbtnwPXavWnkBjfgEAMD7Dl+jWH8qXzWBh3tp25kOgUZ+1Oo8kewC1tnaN6Twz7wG2ZH5XWEzGuvpEVieQBaAWP2FiejFzj2raCpPiR4aRB9gO1k+zvgwAKFdPmUwjgmnxI0ISQPyDqIOpli4ZJm1tkD0YrQBiOZx1ZL8ay/0qkHsBMr8MAnZFmrEAWakIqeQ+BLwArifgmswnQdv9SSMBhnUzVAXl5/KJD+8qpaAT7v64JliYT/zPFHwOsOnMsSfnGrbz60op6EweCrTt1t40lO7KYcOU3IeAF8D1BFzjBXA9AdfkXgCrpeRIOfle4avm1mWM05YJufcAL4DrCbjGC+B6Ah6Pxyn/AEWkVBCTdreFAAAAAElFTkSuQmCC" alt="Fille aux cheveux rouges bouclés en pixel art">';
+let mazeLevel=0,mazeGrid=[],mazePlayer={x:1,y:1},mazeFinished=false,mazeMoves=0;
+let mazeHearts=new Set(),mazeTraps=new Set(),mazeKeyPos='',mazeHasKey=false,mazeGate='',mazeVisited=new Set(),mazeEnd='',mazeHugTimer=null;
+const mazeId=(x,y)=>x+','+y;
+function mazeShuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function mazeGenerate(n){
+ const grid=Array.from({length:n},()=>Array(n).fill(1));const stack=[[1,1]];grid[1][1]=0;
+ while(stack.length){const [x,y]=stack[stack.length-1];const dirs=mazeShuffle([[2,0],[-2,0],[0,2],[0,-2]]);
+ const next=dirs.find(([dx,dy])=>{const nx=x+dx,ny=y+dy;return nx>0&&ny>0&&nx<n-1&&ny<n-1&&grid[ny][nx]===1;});
+ if(!next){stack.pop();continue;}const [dx,dy]=next;grid[y+dy/2][x+dx/2]=0;grid[y+dy][x+dx]=0;stack.push([x+dx,y+dy]);}
+ return grid;
 }
-
-function afficherQuestionAmour() {
-  const zone = document.getElementById("reponsesAmour");
-  const titre = document.getElementById("questionAmour");
-  const score = document.getElementById("scoreAmour");
-
-  zone.innerHTML = "";
-
-  if (questionActuelle >= questionsAmour.length) {
-    titre.textContent = "LEVEL COMPLETE ! 💗";
-    score.textContent =
-      "Ton score : " + scoreQuizAmour +
-      " / 4 ❤️ Je t'aime !";
-    return;
-  }
-
-  const q = questionsAmour[questionActuelle];
-  titre.textContent = q.question;
-  score.textContent =
-    "QUESTION " + (questionActuelle + 1) + " / 4";
-
-  q.reponses.forEach((reponse, index) => {
-    const bouton = document.createElement("button");
-    bouton.textContent = reponse;
-
-    bouton.onclick = function() {
-      if (index === q.bonne) scoreQuizAmour++;
-      questionActuelle++;
-      afficherQuestionAmour();
-    };
-
-    zone.appendChild(bouton);
-  });
+function mazeRoute(){const target=mazeEnd;const queue=[[1,1]];const previous=new Map([['1,1',null]]);for(let i=0;i<queue.length;i++){
+ const [x,y]=queue[i],key=mazeId(x,y);if(key===target)break;
+ for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy,nk=mazeId(nx,ny);if(mazeGrid[ny]?.[nx]===0&&!previous.has(nk)){previous.set(nk,key);queue.push([nx,ny]);}}
+ }let path=[],p=target;while(p){path.unshift(p);p=previous.get(p);}return path;}
+function startMaze(level=mazeLevel){
+ clearTimeout(mazeHugTimer);mazeLevel=level;const config=MAZE_LEVELS[mazeLevel],n=config.size;
+ mazeGrid=mazeGenerate(n);mazePlayer={x:1,y:1};mazeMoves=0;mazeFinished=false;mazeHasKey=false;mazeVisited=new Set(['1,1']);mazeEnd=mazeId(n-2,n-2);
+ const route=mazeRoute();mazeGate=route[Math.max(2,Math.floor(route.length*.79))];
+ // Le chemin vers la fille est bloqué par une porte, mais les objets sont accessibles avant.
+ const accessible=[];const queue=[[1,1]],seen=new Set(['1,1']);for(let i=0;i<queue.length;i++){
+ const [x,y]=queue[i];for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy,k=mazeId(nx,ny);if(mazeGrid[ny]?.[nx]===0&&k!==mazeGate&&!seen.has(k)){seen.add(k);queue.push([nx,ny]);}}
+ }for(const [x,y] of queue){const k=mazeId(x,y);if(k!=='1,1'&&k!==mazeEnd)accessible.push(k);}
+ mazeShuffle(accessible);mazeHearts=new Set(accessible.splice(0,config.hearts));mazeKeyPos=accessible.shift()||'1,1';mazeTraps=new Set(accessible.splice(0,config.traps));
+ document.getElementById('mazeMessage').textContent='Niveau '+(mazeLevel+1)+' : trouve tous les cœurs et la clé ! 💗';renderMaze();
 }
-
-demarrerQuizAmour();
+function renderMaze(){
+ const board=document.getElementById('mazeBoard');board.replaceChildren();const n=mazeGrid.length;board.style.gridTemplateColumns='repeat('+n+',minmax(0,1fr))';
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+ const k=mazeId(x,y),cell=document.createElement('div');cell.className='maze-cell '+(mazeGrid[y][x]?'maze-wall':'maze-path');
+ if(mazeVisited.has(k))cell.classList.add('maze-visited');
+ if(k===mazeGate)cell.classList.add('maze-gate');
+ if(x===mazePlayer.x&&y===mazePlayer.y){cell.classList.add('maze-player');const fig=document.createElement('span');fig.className='maze-avatar';fig.innerHTML=mazeBoyHTML;cell.appendChild(fig);}
+ else if(k===mazeEnd){const fig=document.createElement('span');fig.className='maze-avatar'+(mazeFinished?' maze-celebrate':'');fig.innerHTML=mazeGirlHTML;cell.appendChild(fig);}
+ else if(mazeHearts.has(k)||k===mazeKeyPos||mazeTraps.has(k)||k===mazeGate){const o=document.createElement('span');o.className='maze-object';o.textContent=mazeHearts.has(k)?'💗':k===mazeKeyPos?'🗝️':mazeTraps.has(k)?'⚡':(mazeHasKey&&mazeHearts.size===0?'🚪':'🔒');cell.appendChild(o);}
+ else if(!mazeGrid[y][x]&&(x+y)%9===0){cell.textContent='·';}
+ board.appendChild(cell);
+ }
+ document.getElementById('mazeSteps').textContent=mazeMoves;
+ document.getElementById('mazeHearts').textContent=(MAZE_LEVELS[mazeLevel].hearts-mazeHearts.size)+' / '+MAZE_LEVELS[mazeLevel].hearts;
+ document.getElementById('mazeKey').textContent=mazeHasKey?'OBTENUE ✓':'À TROUVER';
+ document.querySelectorAll('#mazeLevels span').forEach((el,i)=>el.classList.toggle('on',i===mazeLevel));
+}
+function moveMaze(dx,dy){
+ if(!document.getElementById('retrouve').classList.contains('active')||mazeFinished||!mazeGrid.length)return;
+ const x=mazePlayer.x+dx,y=mazePlayer.y+dy,k=mazeId(x,y);
+ if(mazeGrid[y]?.[x]!==0)return;
+ if(k===mazeGate&&(!mazeHasKey||mazeHearts.size>0)){document.getElementById('mazeMessage').textContent='🔒 Porte fermée ! Il te faut la clé ET tous les cœurs !';return;}
+ mazePlayer={x,y};mazeMoves++;mazeVisited.add(k);let msg='Continue, elle t’attend quelque part… 💕';
+ if(mazeHearts.delete(k))msg='💗 Un cœur récupéré ! Encore '+mazeHearts.size+' à trouver !';
+ if(k===mazeKeyPos){mazeHasKey=true;mazeKeyPos='';msg='🗝️ Tu as trouvé la clé !';}
+ if(mazeTraps.delete(k)){mazePlayer={x:1,y:1};msg='⚡ OUPS ! Un piège t’a renvoyé au départ !';}
+ if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN PIXEL ! 💗';
+ mazeHugTimer=setTimeout(()=>{if(!document.getElementById('retrouve').classList.contains('active'))return;
+ if(mazeLevel<MAZE_LEVELS.length-1){document.getElementById('mazeMessage').textContent='💌 Niveau terminé ! Le prochain commence…';mazeHugTimer=setTimeout(()=>startMaze(mazeLevel+1),1300);}
+ else document.getElementById('mazeMessage').innerHTML='🏆 LOVE QUEST COMPLETE ! 💗<br>🫂 Vous vous retrouvez pour un câlin éternel !<br>♡ TOGETHER FOREVER ♡';
+ },2100);}
+ document.getElementById('mazeMessage').textContent=msg;renderMaze();
+}
+document.addEventListener('keydown',event=>{
+ if(!document.getElementById('retrouve').classList.contains('active'))return;
+ const directions={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],z:[0,-1],Z:[0,-1],q:[-1,0],Q:[-1,0],s:[0,1],S:[0,1],d:[1,0],D:[1,0],w:[0,-1],a:[-1,0]};
+ if(directions[event.key]){event.preventDefault();moveMaze(...directions[event.key]);}
+});
+// Glisser sur le labyrinthe fonctionne aussi sur téléphone.
+let mazeTouch=null;document.getElementById('mazeBoard').addEventListener('touchstart',e=>{mazeTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
+document.getElementById('mazeBoard').addEventListener('touchend',e=>{if(!mazeTouch)return;const dx=e.changedTouches[0].clientX-mazeTouch.x,dy=e.changedTouches[0].clientY-mazeTouch.y;mazeTouch=null;if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;if(Math.abs(dx)>Math.abs(dy))moveMaze(Math.sign(dx),0);else moveMaze(0,Math.sign(dy));},{passive:true});
 </script>
   
 
