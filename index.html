@@ -116,16 +116,23 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 </section>
 
 <!-- PHOTOS -->
+
 <section id="photos" class="screen">
-  <h1 class="pixel">OUR MEMORIES</h1>
-  <div class="card">
-    <p>Nos petits moments préférés ♡</p>
-    <div style="font-size:55px">📷 💗 📷</div>
-    <p>Nos plus beaux souvenirs sont encore à venir !</p>
-    <p class="small">Tu pourras remplacer ces images par vos photos dans une prochaine étape.</p>
+  <h2>📸 NOS SOUVENIRS</h2>
+  <p>Quelques moments avec toi 💗</p>
+
+  <div style="background:#fff; color:#473050; padding:15px; max-width:300px; margin:20px auto; transform:rotate(-2deg); box-shadow:6px 6px 0 #a46bba;">
+    <img id="souvenirPhoto" src="photo1.jpg" alt="Notre souvenir" style="width:100%; display:block;">
+    <p id="souvenirTexte" style="font-family:inherit; margin:15px 0 5px;">Souvenir n°1 💕</p>
   </div>
-  <button class="secondary" onclick="show('menu')">← MENU</button>
+
+  <button onclick="changerSouvenir(-1)">⬅️ Avant</button>
+  <button onclick="changerSouvenir(1)">Après ➡️</button>
+
+  <p id="numeroSouvenir">1 / 4</p>
+  <button onclick="showScreen('menu')">↩ Retour</button>
 </section>
+
 
 <!-- COMPTEUR -->
 <section id="counter" class="screen">
@@ -297,6 +304,25 @@ function flip(tile){
  }
 }
 newGame();
+
+let souvenirActuel = 1;
+
+function changerSouvenir(direction) {
+  souvenirActuel += direction;
+
+  if (souvenirActuel > 4) souvenirActuel = 1;
+  if (souvenirActuel < 1) souvenirActuel = 4;
+
+  document.getElementById("souvenirPhoto").src =
+    "photo" + souvenirActuel + ".jpg";
+
+  document.getElementById("souvenirTexte").textContent =
+    "Souvenir n°" + souvenirActuel + " 💕";
+
+  document.getElementById("numeroSouvenir").textContent =
+    souvenirActuel + " / 4";
+}
+
 </script>
 </body>
 </html>
