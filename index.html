@@ -91,23 +91,24 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 .loading-panel{max-width:640px;margin:12px auto;padding:24px 14px 28px;background:#30213f;border:4px solid #ff9dcf;box-shadow:7px 7px 0 #8465b9;border-radius:6px;overflow:hidden}
 .loading-stage{position:relative;height:235px;margin:10px auto 0;max-width:520px;overflow:hidden;background:radial-gradient(ellipse at center bottom,#6a477d 0%,#39274f 60%,#291e40 100%);border:3px solid #9b74c5;border-radius:5px}
 .loading-stage:after{content:'';position:absolute;bottom:16px;left:0;right:0;height:3px;background:#d7a4db;opacity:.7}
-.chibi{position:absolute;bottom:17px;width:115px;height:176px;z-index:2;filter:drop-shadow(2px 5px 1px #20132c);animation-duration:5.8s;animation-fill-mode:forwards;animation-timing-function:ease-in-out}
-.chibi svg{width:100%;height:100%;overflow:visible}
+.chibi{position:absolute;bottom:17px;width:112px;height:168px;z-index:2;animation-duration:7s;animation-fill-mode:forwards;animation-timing-function:linear}
+.chibi img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;position:absolute;inset:0;filter:drop-shadow(3px 4px 0 #20132c)}
 .chibi-boy{left:0;animation-name:boyMeet}
 .chibi-girl{right:0;animation-name:girlMeet}
-.chibi .feet{transform-origin:50% 77%;animation:littleWalk .34s ease-in-out infinite alternate}
-.chibi-girl .feet{animation-delay:.17s}
-.meet-heart{position:absolute;top:38px;left:50%;transform:translateX(-50%) scale(0);font-size:40px;z-index:3;animation:heartAppear 5.8s forwards}
+.chibi .pose-hug{opacity:0;animation:hugPose 7s steps(1,end) forwards}
+.chibi .pose-walk{animation:walkPose 7s steps(1,end) forwards}
+.meet-heart{position:absolute;top:25px;left:50%;transform:translateX(-50%) scale(0);font-size:43px;z-index:3;animation:heartAppear 7s forwards}
 .loading-percent{font-family:'Press Start 2P',monospace;font-size:10px;color:#fff1e8;margin-top:15px}
 .loading-track{width:min(100%,460px);height:22px;margin:12px auto 0;border:3px solid #e6b4f0;background:#21182f;padding:2px;border-radius:3px;overflow:hidden}
-.loading-fill{height:100%;width:0;background:repeating-linear-gradient(90deg,#ff91c8 0 18px,#e678b6 18px 22px);animation:loadLove 5.8s linear forwards}
+.loading-fill{height:100%;width:0;background:repeating-linear-gradient(90deg,#ff91c8 0 18px,#e678b6 18px 22px);animation:loadLove 7s linear forwards}
 .loading-subtitle{font-size:12px;color:#eac4fa;min-height:20px}
-@keyframes boyMeet{0%,8%{left:0}72%,100%{left:calc(50% - 107px)}}
-@keyframes girlMeet{0%,8%{right:0}72%,100%{right:calc(50% - 107px)}}
-@keyframes littleWalk{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
-@keyframes heartAppear{0%,70%{transform:translateX(-50%) scale(0);opacity:0}80%,100%{transform:translateX(-50%) scale(1);opacity:1}}
+@keyframes boyMeet{0%,8%{left:0}76%,100%{left:calc(50% - 93px)}}
+@keyframes girlMeet{0%,8%{right:0}76%,100%{right:calc(50% - 93px)}}
+@keyframes hugPose{0%,75%{opacity:0}76%,100%{opacity:1}}
+@keyframes walkPose{0%,75%{opacity:1}76%,100%{opacity:0}}
+@keyframes heartAppear{0%,75%{transform:translateX(-50%) scale(0);opacity:0}84%,100%{transform:translateX(-50%) scale(1);opacity:1}}
 @keyframes loadLove{0%{width:0}100%{width:100%}}
-@media(max-width:430px){.loading-stage{height:205px}.chibi{width:95px;height:150px}.loading-panel{padding:18px 9px}.meet-heart{font-size:32px}@keyframes boyMeet{0%,8%{left:0}72%,100%{left:calc(50% - 90px)}}@keyframes girlMeet{0%,8%{right:0}72%,100%{right:calc(50% - 90px)}}}
+@media(max-width:430px){.loading-stage{height:205px}.chibi{width:88px;height:135px}.loading-panel{padding:18px 9px}.meet-heart{font-size:32px}@keyframes boyMeet{0%,8%{left:0}76%,100%{left:calc(50% - 73px)}}@keyframes girlMeet{0%,8%{right:0}76%,100%{right:calc(50% - 73px)}}}
 @media(prefers-reduced-motion:reduce){.chibi,.meet-heart,.loading-fill,.chibi .feet{animation-duration:.01ms;animation-iteration-count:1}}
 
 </style>
@@ -138,24 +139,14 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
     <p class="pixel small" style="color:#aaf4bd">✓ ACCESS GRANTED</p>
     <h2 class="pixel" style="font-size:clamp(11px,3vw,16px)">LOADING OUR LOVE STORY...</h2>
     <div class="loading-stage">
-      <div class="chibi chibi-boy"><svg viewBox="0 0 120 185" xmlns="http://www.w3.org/2000/svg" aria-label="Garçon chibi, cheveux marron, lunettes et moustache">
-<g class="feet"><path d="M39 132 L54 132 L53 166 L35 166Z" fill="#506c9d"/><path d="M66 132 L82 132 L85 166 L67 166Z" fill="#506c9d"/><path d="M33 161 Q44 156 56 163 L56 172 L31 172Z" fill="#29233f"/><path d="M65 162 Q76 156 87 162 L90 172 L65 172Z" fill="#29233f"/></g>
-<path d="M37 102 Q26 110 24 136 L38 142 L47 120Z" fill="#f2b18e"/><path d="M84 104 Q96 112 97 135 L84 140 L75 118Z" fill="#f2b18e"/>
-<path d="M42 102 Q61 94 80 102 L88 143 L33 143Z" fill="#9ac1d4"/><path d="M48 107 L70 107 L70 119 L48 119Z" fill="#d3e5e9"/><path d="M43 137 L81 137" stroke="#6589a9" stroke-width="3"/>
-<ellipse cx="61" cy="67" rx="38" ry="42" fill="#f3ba98"/><ellipse cx="25" cy="74" rx="7" ry="11" fill="#efaa8d"/><ellipse cx="97" cy="74" rx="7" ry="11" fill="#efaa8d"/>
-<path d="M22 64 Q10 29 39 19 Q66 5 90 23 Q107 36 98 66 L92 52 Q82 47 77 36 Q60 53 35 47 L30 67Z" fill="#694233"/><path d="M26 43 Q36 15 60 20 Q76 12 91 34" stroke="#8d5a44" stroke-width="9" fill="none" stroke-linecap="round"/>
-<rect x="30" y="62" width="26" height="20" rx="8" fill="none" stroke="#342d43" stroke-width="4"/><rect x="64" y="62" width="26" height="20" rx="8" fill="none" stroke="#342d43" stroke-width="4"/><path d="M56 68 L64 68" stroke="#342d43" stroke-width="4"/><circle cx="45" cy="72" r="3.5" fill="#29233f"/><circle cx="76" cy="72" r="3.5" fill="#29233f"/><path d="M51 90 Q57 85 61 90 Q65 85 71 90 Q65 98 61 92 Q57 98 51 90Z" fill="#744535"/><path d="M56 100 Q61 104 66 100" fill="none" stroke="#aa6260" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="36" cy="88" rx="7" ry="4" fill="#ed9999" opacity=".6"/><ellipse cx="85" cy="88" rx="7" ry="4" fill="#ed9999" opacity=".6"/>
-</svg></div>
-      <div class="chibi chibi-girl"><svg viewBox="0 0 120 185" xmlns="http://www.w3.org/2000/svg" aria-label="Fille chibi, cheveux rouges bouclés et lunettes">
-<g class="feet"><path d="M41 138 L54 138 L52 164 L38 164Z" fill="#f3b49a"/><path d="M67 138 L80 138 L82 164 L68 164Z" fill="#f3b49a"/><path d="M36 160 Q44 156 56 161 L56 173 L34 173Z" fill="#62426e"/><path d="M66 161 Q76 155 85 162 L87 173 L65 173Z" fill="#62426e"/></g>
-<path d="M31 101 Q20 110 22 139 L36 142 L45 118Z" fill="#f5bd9f"/><path d="M85 102 Q99 111 98 139 L84 142 L75 116Z" fill="#f5bd9f"/>
-<path d="M41 103 Q60 94 80 103 L90 144 Q61 153 31 144Z" fill="#f5a0cb"/><path d="M48 106 Q59 116 72 106" fill="none" stroke="#ffe5ee" stroke-width="4"/><path d="M60 115 L60 141" stroke="#db79b1" stroke-width="2"/>
-<g fill="#b94731"><circle cx="28" cy="48" r="17"/><circle cx="29" cy="75" r="17"/><circle cx="27" cy="102" r="16"/><circle cx="91" cy="48" r="17"/><circle cx="94" cy="75" r="17"/><circle cx="93" cy="103" r="16"/><circle cx="42" cy="24" r="18"/><circle cx="62" cy="19" r="18"/><circle cx="81" cy="26" r="18"/></g>
-<ellipse cx="60" cy="69" rx="35" ry="40" fill="#f5bd9f"/>
-<g fill="#d96343"><circle cx="33" cy="34" r="14"/><circle cx="49" cy="26" r="14"/><circle cx="68" cy="27" r="15"/><circle cx="86" cy="37" r="14"/><circle cx="23" cy="60" r="10"/><circle cx="99" cy="64" r="10"/><circle cx="24" cy="89" r="10"/><circle cx="97" cy="91" r="11"/></g>
-<path d="M29 55 Q44 52 48 43 Q58 51 69 43 Q81 53 91 54" stroke="#b94731" stroke-width="8" fill="none" stroke-linecap="round"/>
-<rect x="30" y="64" width="26" height="21" rx="9" fill="none" stroke="#53324c" stroke-width="4"/><rect x="64" y="64" width="26" height="21" rx="9" fill="none" stroke="#53324c" stroke-width="4"/><path d="M56 70 L64 70" stroke="#53324c" stroke-width="4"/><circle cx="44" cy="74" r="3.5" fill="#36293f"/><circle cx="77" cy="74" r="3.5" fill="#36293f"/><path d="M54 96 Q60 103 67 96" stroke="#b96874" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="35" cy="89" rx="8" ry="4" fill="#f18b9e" opacity=".65"/><ellipse cx="85" cy="89" rx="8" ry="4" fill="#f18b9e" opacity=".65"/>
-</svg></div>
+      <div class="chibi chibi-boy" aria-label="Garçon pixel art avec cheveux marron, lunettes et moustache">
+        <img class="pose-walk" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABgCAYAAACtxXToAAAC00lEQVR4nO2cP2sUURTFr8HYRWQjYgqbMIQ0go6CjTrgh9AiaaysgmAhbGFlEbAQJJWVzTb6IYRVGwNRISBLkDQWEdFFtLNwbByzO9mZeXPfnTkD7/yqJG/enZOTe9998ycrQgghhBBCCAmRYxZB4ihJfea/+zQ00aHhuFWgG8s/VfNe7p+0kqDCzABffLMoo2421TbASuismNosytBkkyoDVnvfp74fjRc1Yabi+cbQMgc5a4egAWgBaMy6QLYArV2ut0au9VIR6cml5VREFkRE5GD8y0pWJSYGTC+KPYuQrdGZfcAkbW6OnAzI9/6ilpVvj1rqxhmNF9XbaecMqBKF6uMZcZSkGhPYBawD7uyPrUM2SvAZELwBpiWAXgg1mBow3LplGa4WycZz1bzgS4AGoAWgoQFoAWicu0BRi0vn/22/50Wu33vhfOJXj28e+Vmd+VWxXHEyIH+REUdJmrU8reiuYLYPeP1sw+m4a7e3Wo1VBeyGSFcyp1EDrq4/+f/1m8FdWIwy2AVQJ7bsAj4wA5oMblGzTdT9JGYGWLSkJmJVwRLwDeCzDW0ylivMAO3Er3sHIiJy6s/ZwmNOrB5eQjx49PTI+MP7d5zHRUR+j2Y/eP0x96VcbAnMAOTJZ/3V28bbgMn0O7OyVHhcPp1dUj5PVlJZ+VkAy4CqX7Ytgl8DgjdAXQJl9d40ludmBmgnap/FdQ2nV0qq3g9e39wsHLty8VxNSYe8ff+5dHzQ75eOu7wy45wBRU9+0Zngqyv4NYAGoAWgoQFoAWhoAFoAGhqAFoCGBqAFoKEBaAFoTG6Kbu9+VI11AWaA64Ho6/4ifHWpP7ggjpK07E5Qmwz6ffV/jQVfAl4ZYCnEF20GmH12Rxwl6enzSeVx33aHhWItYtQl+BKgAWgBaGgAWgCa4A3waiUXVvR7gQ97023MMlYdgs8AGoAWgIYGoAUQQqD8BSLfu3aanKzZAAAAAElFTkSuQmCC" alt="">
+        <img class="pose-hug" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABgCAYAAACtxXToAAAC4klEQVR4nO2cv0scURDHR/HSReQMISlsZDmOgJCsITbGhfwPauE1VlaHkEK4IpXFQYqAXJUqjU3i/xA4Y6NgEjiQ4xAbixPRQ5LOIpvGTW739sfbebM7K28+lXe77/vGrzNv3v5AAEEQBEEQBEEQTGSMQsS2HFdn/PfTNkkcGCaohN7M/kKN+3o2SRUCCjIDdNHNIo+02ZTaAKpAwzSxWeSBySZUBlTL177P3cE0Rsanp6uBZZxl1gIhBnAHwA1ZF/AWoLWX6dbItbILAGWYn3UB4CEAAPQHv6nCSoTEAP+iWKaQzI3C7AOGyXNzpGRAsPdHtaxge8SSVqc7mEZvp5UzICkorj7uYVuOizFBugC14PHZgFoyU4zPAOMNIC0B7oUQA6kB7dYqpVwqnPpn1DjjS0AM4A6AGzGAOwBulLtAVItzS3fb7xLA0tsvyhPvf1gZ+S7N+CQtVZQMCF5k2Jbjei0PG3RRINsHfPtUVzrv9XorV60k2G6IFCVzMjVgsbbz7+eD3U02jTikC3BNTNkFdJAMyFKcomazqPthyAygaElZaCUhJaAroLMNzVJLFckA7MDLXh8AAKb+PIk850H1/yXEu/cfR45vb20oHwcAuO2GP3i9Gb+IDzYGyQDOycP+6nmjbcBw+j2uPI08L5jOKikfxCspr/woYMuApF82L4xfA4w3AF0CcfWeNZRzSwZgB2KfxRUN9GvqtuW4tWYz8byFFzPYKeDwx7nv826jgdYK4t3pLuRbYnFQPIEezl5ZA7gDoEBnZ2h8BogB3AFwc+/WgLD9x159Ca13rwyI2ncsNxrod4WNLwExgDsAbsQA7gC4Md4AkjZ41DlBHdPl1dwzbQ3jM8B4A0hKgCIVuTA+A7TuCVIGogv2WoDsf3fYluM+mnMSz7vqtCODpdBIi/ElIAZwB8CNGMAdADfGG6DVSp5X8HuBnz1/G6PUSoPxGSAGcAfAjRjAHYAgCKz8BW2HumBv+9WRAAAAAElFTkSuQmCC" alt="">
+      </div>
+      <div class="chibi chibi-girl" aria-label="Fille pixel art aux cheveux rouges bouclés et lunettes">
+        <img class="pose-walk" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABgCAYAAACtxXToAAAD50lEQVR4nO2cQWsTQRTH/63WU02kVLH2GqIgiuSgF3VBDxbxbEG8+AGCILb4EUIVQfIBvIjQnjyICGIh1YtFRRRBg1eNaBWj9SLUeIibTrMzO292Xnay7PxOye7Mm+l/33vzdiYU8Hg8Ho/H4/F4cslIGoNUSkHHpP3LD41U5gWkKMD1qZ/adnOtgpFdDqG22xowebrHDu+TXn/2+lPvM0UowFwsFdYCAPpJm06WIhQXLAIA6U6ak1HXE3ANmwdQ4PAGMZwo+UeXKFMVgIpOKM5EySZA2rHOlXPIApgWM1nByANkrse1HrvCOAQirtdaBwAcnN6p7PNgugNg8/7Z56lVulqcJMFrxe8AgFp7IvKd6lFcOYdFgLlW4f9TphH+4arvaWItwMqZcQDA+rdf5D6N+mzi8YLqYuK+MowFULleXA4YZnwpzGXo7cfNEJhrFazcXAfn0juUpXAcKmGD6mJvNQG6iZWyYZI5AUJkybB/NVFVr6IwWgFEI8NW9Zm8FPXXHiEkDzAZaJCxL8P2pYgcAlnd8dGR+2Uw9wJYrwJX14qbX8aAk1eWSP1Wbp6PXKP27Y410h17+TduTLbp/fogC6CO9aLiejZgqwOe3K6S2p24VE/Vlg5nhZCRuw+QgQpw/OKt3uendy47sxFHZkthEZsKlSRA7ABjyQa2XgUEGvVZ7UaJWAKL5X2sAHFb4WHJOyyxDHRfciqloCO+FcZRa0/oPUBmjLqHxxGzSW2c3r9bee/x+6+9z6QQ6DdWW92ItOFYkgZhS4cvhW0NyJLZMNii4j0gaccvzRYAYNffvco2Ow7wHoH9eSdflH6Mfo5cExNdHCQBosbcneRw40PA1oDofnvKU6Q+9+82lffOXSgr74UhFYYfB94DdA0GcXIb95RtCEt3kzmTQqC/HHZ5nB2HyTtAeDgSK0D4cgFsLYdrqxvkeB8EcWNT3wFCfA5I2pH7hwquSCTAo6PbtnwPXavWnkBjfgEAMD7Dl+jWH8qXzWBh3tp25kOgUZ+1Oo8kewC1tnaN6Twz7wG2ZH5XWEzGuvpEVieQBaAWP2FiejFzj2raCpPiR4aRB9gO1k+zvgwAKFdPmUwjgmnxI0ISQPyDqIOpli4ZJm1tkD0YrQBiOZx1ZL8ay/0qkHsBMr8MAnZFmrEAWakIqeQ+BLwArifgmswnQdv9SSMBhnUzVAXl5/KJD+8qpaAT7v64JliYT/zPFHwOsOnMsSfnGrbz60op6EweCrTt1t40lO7KYcOU3IeAF8D1BFzjBXA9AdfkXgCrpeRIOfle4avm1mWM05YJufcAL4DrCbjGC+B6Ah6Pxyn/AEWkVBCTdreFAAAAAElFTkSuQmCC" alt="">
+        <img class="pose-hug" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABgCAYAAACtxXToAAAEAElEQVR4nO2cQWvUQBTH/1utp7qVUsW23lxXQRTZg17UgB4s4tmCePEDLAWxix9hWUWQ/QBeRKgnDyKCWEj1YtEiiqBLr7qiVazWi1DXwzrbbJLJvMnMZpJmfqdNMvNm+s97b14moYDFYrFYLBaLxZJLCkkMUik5HZn2yytuIvMCEhTgxsRPYbu5dlHKrg6htqsakLm7J45Ohp5/8eZT7zdFKEBeLB7KAgDiSctOliKULrQIACQ7aZ0MmZ6AabR5AAUd3uANJ0r+ESXKRAWgIhJKZ6LUJkDSsa4r55AFkC1msoKUB4S5nq712BTSIRBwvfY6AODw1E5un0dTHQCb18+/TKzSFWIkCV4f/Q4AqK+NBY6pHqUr52gRYK5d/H+XabA/nHecJMoCLJ4bAQCsf/tF7uM2Z2KP51TnY/cNQ1oAnutF5YA0Y0thXYbefdwMgbl2UcnNRehcelNZCkfBE9apzvdWE6CbWCkbJpkTgBGWDP2rCa969QojFMBrJG1Vn8xDkb/2YJA8QGagQcZ+GKoPReQQyOqOj4jcL4O5F0B5Fbi2Orp5MAycvnqf1G/x1sXAOWrf7liF7tgLv3FzfI3ezwdZAH6sj3LOZwNtdcCzO1VSu1NXmonaEmGsEJJy9wEyUAFOXr7d+/387qwxG1FkthT2olKhkgSIHGA43sDKq4AHtzkj3CjxlsDe8j5SgKitcFbypiWWge5DTqXkdLxPhVHU18bEHhBmjLqHpyNm49o4e3A399rTD197v0kh4DdWX9oItNGxJA3ClghbCqsaCEtmabBFxXpA3I5fWm0AwK6/e7ltdhzS+wrsz/vwRenH0OfAOW+ii4IkQNCYuTc5urEhoGrA6357yhOkPg/vtbjXLlwqc6+xkGLhpwPrAaIGg3hzG3WXVWClu8ycSSHgL4dNvs6OQuYZgL0ciRSAPVwA/eVwfWmDHO+DIGps6jMAw+aAuB11f6hgij4BqJ/CPTm+re+YuRbLDW6tgZFpfYlu/TF/2QQAp1GLbTvgAf53e1vlTvMghwC1tjaN7DwDAuissrJApneF/bEvqk/C6gSyADLFj9Oo4dX0A3J7FWSKnzCkPEB1MD+t5gIAoFw9IzONALLFjxeSAN4/iDqYaOnyItNWhbAb0yfA8opb2D/rhnbeCp/Lh301lvtSOPcCZHoZZKgUadICZKUipJL7ELACmJ6AaTKfBFX3J6UESNtmqFtrAOg+e8T9XwJkAfwDVEpOh00gLpMH9in114HNASqdVfbi0oK299eVktMZP+II262+dbnxqsOGLLkPASuA6QmYxgpgegKmyb0ASkvJsXL8fcLXrf5lTKctGXLvAVYA0xMwjRXA9AQsFotR/gHcH1tZFVC0zgAAAABJRU5ErkJggg==" alt="">
+      </div>
       <div class="meet-heart">💗</div>
     </div>
     <div class="loading-track"><div class="loading-fill"></div></div>
@@ -361,7 +352,7 @@ function startLoveLoading() {
   show('loveLoading');
   const scene = document.getElementById('loveLoading');
   // Relance les animations si l'utilisateur se reconnecte.
-  scene.querySelectorAll('.chibi, .meet-heart, .loading-fill').forEach(el => {
+  scene.querySelectorAll('.chibi, .meet-heart, .loading-fill, .pose-walk, .pose-hug').forEach(el => {
     el.style.animation = 'none';
     void el.offsetWidth;
     el.style.animation = '';
@@ -373,12 +364,12 @@ function startLoveLoading() {
   const start = performance.now();
   clearInterval(loadingTimer);
   loadingTimer = setInterval(() => {
-    const progress = Math.min(100, Math.round((performance.now() - start) / 5800 * 100));
+    const progress = Math.min(100, Math.round((performance.now() - start) / 7000 * 100));
     percent.textContent = progress + '%';
-    if (progress >= 75) message.textContent = '♡ TOGETHER FOREVER ♡';
+    if (progress >= 76) message.textContent = '♡ BIG PIXEL HUG! ♡';
     if (progress === 100) {
       clearInterval(loadingTimer);
-      setTimeout(() => show('home'), 550);
+      setTimeout(() => show('home'), 1100);
     }
   }, 65);
 }
