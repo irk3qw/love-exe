@@ -65,6 +65,22 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
  .pixel{font-size:10px}
  .tiles{gap:6px}
 }
+
+/* LOVE CLAW — machine à pince pixel */
+.claw-machine{position:relative;width:min(100%,360px);height:340px;margin:20px auto 12px;background:linear-gradient(#49336b,#2c2047);border:7px solid #ff91c8;box-shadow:7px 7px 0 #8d6bd0,inset 0 0 0 4px #a88bff;overflow:hidden;border-radius:8px}
+.claw-title{position:absolute;top:0;left:0;right:0;background:#ff91c8;color:#2b1943;font-size:9px;padding:9px 3px;z-index:4}
+.claw-rail{position:absolute;top:39px;left:5%;width:90%;height:6px;background:#bda6ff;z-index:1}
+.claw-arm{position:absolute;top:42px;left:50%;width:48px;height:92px;transform:translateX(-50%);transition:left .22s ease,top .85s ease;z-index:3;pointer-events:none}
+.claw-rope{height:55px;width:5px;background:repeating-linear-gradient(0deg,#ffd1ea 0 7px,#b96cc2 7px 12px);margin:auto}
+.claw-grabber{font-size:37px;line-height:38px;filter:drop-shadow(2px 3px #25163d)}
+.claw-toys{position:absolute;bottom:34px;left:0;right:0;display:flex;justify-content:space-around;align-items:end;padding:0 7px}
+.claw-toy{font-size:40px;filter:drop-shadow(3px 4px #20142f);transition:transform .3s,opacity .3s}
+.claw-toy.won{opacity:.12;transform:translateY(-55px) scale(.5)}
+.claw-floor{position:absolute;bottom:0;left:0;right:0;height:30px;background:repeating-linear-gradient(90deg,#ed78b3 0 20px,#c55da6 20px 40px);border-top:5px solid #ffd2e8}
+.claw-controls{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
+.claw-controls button{min-width:66px}
+.claw-message{min-height:60px;font-weight:900;color:#ffd1e9}
+
 </style>
 </head>
 <body>
@@ -191,22 +207,26 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 
 
 <section id="cadeaux" class="screen">
-  <h2>🎁 LOVE GACHA 🎁</h2>
-  <p>Une surprise t'attend, mon amour ! 💗</p>
-
-  <div style="font-size:70px; margin:25px;">
-    🕹️🎁
+  <h1 class="pixel">LOVE CLAW 💗</h1>
+  <p>Déplace la pince et attrape un cadeau ! 🧸</p>
+  <div class="claw-machine" aria-label="Machine à pince romantique">
+    <div class="claw-title pixel">★ LOVE ARCADE ★</div>
+    <div class="claw-rail"></div>
+    <div class="claw-arm" id="clawArm"><div class="claw-rope"></div><div class="claw-grabber" id="clawGrabber">🪝</div></div>
+    <div class="claw-toys" id="clawToys">
+      <span class="claw-toy">🧸</span><span class="claw-toy">💝</span><span class="claw-toy">🐻</span><span class="claw-toy">🎁</span><span class="claw-toy">🐰</span>
+    </div>
+    <div class="claw-floor"></div>
   </div>
-
-  <p id="cadeauResultat">Appuie pour gagner !</p>
-
-  <button onclick="tirerCadeau()">
-    💕 TENTER MA CHANCE
-  </button>
-
-  <button onclick="showScreen('menu')">
-    ↩ RETOUR
-  </button>
+  <p class="small">← → pour bouger · ESPACE pour attraper</p>
+  <div class="claw-controls">
+    <button type="button" onclick="bougerPince(-1)">◀ GAUCHE</button>
+    <button type="button" onclick="attraperCadeau()">🕹️ ATTRAPER</button>
+    <button type="button" onclick="bougerPince(1)">DROITE ▶</button>
+  </div>
+  <p id="cadeauResultat" class="claw-message" aria-live="polite">Aligne la pince sur une peluche ! 💕</p>
+  <button class="secondary" onclick="reinitialiserPince()">↻ REJOUER</button>
+  <button class="secondary" onclick="show('menu')">↩ RETOUR</button>
 </section>
 
 <section id="connais" class="screen">
@@ -382,23 +402,64 @@ function changerSouvenir(direction) {
 
 const cadeauxLove = [
   "💋 BON POUR 10 BISOUS !",
-  "🧸 BON POUR UN GROS CALIN !",
-  "🍿 UNE SOIREE FILM EN AMOUREUX !",
+  "🧸 BON POUR UN GROS CÂLIN !",
+  "🍿 UNE SOIRÉE FILM EN AMOUREUX !",
   "💆 BON POUR UN MASSAGE !",
   "🍕 UN DATE PIZZA AVEC MOI !",
   "❤️ UN JE T'AIME INFINI !",
-  "🎮 UNE SOIREE GAMING ENSEMBLE !"
+  "🎮 UNE SOIRÉE GAMING ENSEMBLE !"
 ];
-
-function tirerCadeau() {
-  const numero = Math.floor(
-    Math.random() * cadeauxLove.length
-  );
-
-  document.getElementById("cadeauResultat")
-    .textContent = cadeauxLove[numero];
+let positionPince = 2;
+let pinceOccupee = false;
+let cadeauxAttrapes = new Set();
+function placerPince() {
+  document.getElementById('clawArm').style.left = (10 + positionPince * 20) + '%';
 }
-
+function bougerPince(direction) {
+  if (pinceOccupee) return;
+  positionPince = Math.max(0, Math.min(4, positionPince + direction));
+  placerPince();
+}
+function attraperCadeau() {
+  if (pinceOccupee) return;
+  pinceOccupee = true;
+  const arm = document.getElementById('clawArm');
+  const message = document.getElementById('cadeauResultat');
+  const toys = document.querySelectorAll('#clawToys .claw-toy');
+  message.textContent = 'La pince descend... ✨';
+  arm.style.top = '158px';
+  setTimeout(() => {
+    const index = positionPince;
+    const reussite = !cadeauxAttrapes.has(index) && Math.random() < 0.75;
+    if (reussite) {
+      cadeauxAttrapes.add(index);
+      toys[index].classList.add('won');
+      message.textContent = '🎉 GAGNÉ ! ' + cadeauxLove[Math.floor(Math.random() * cadeauxLove.length)];
+    } else {
+      message.textContent = cadeauxAttrapes.has(index) ? 'Déjà attrapé ! Essaie une autre peluche 💕' : 'Oh non, la pince a glissé ! Réessaie 💗';
+    }
+    arm.style.top = '42px';
+    setTimeout(() => { pinceOccupee = false; }, 850);
+  }, 1000);
+}
+function reinitialiserPince() {
+  if (pinceOccupee) return;
+  cadeauxAttrapes.clear();
+  document.querySelectorAll('#clawToys .claw-toy').forEach(toy => toy.classList.remove('won'));
+  positionPince = 2;
+  placerPince();
+  document.getElementById('cadeauResultat').textContent = 'Aligne la pince sur une peluche ! 💕';
+}
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('cadeaux').classList.contains('active')) return;
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.code === 'Space') {
+    e.preventDefault();
+    if (e.key === 'ArrowLeft') bougerPince(-1);
+    else if (e.key === 'ArrowRight') bougerPince(1);
+    else attraperCadeau();
+  }
+});
+placerPince();
 
 const questionsAmour = [
   {
