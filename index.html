@@ -208,6 +208,10 @@ let current=0,score=0,unlocked=false;
 function show(id){
  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
  document.getElementById(id).classList.add('active');
+function showScreen(id) {
+  show(id);
+}
+
 }
 function showSecret(){
  if(unlocked) show('secret');
