@@ -373,6 +373,108 @@ function tirerCadeau() {
     ↩ RETOUR
   </button>
 </section>
+
+<section id="connais" class="screen">
+  <h2>💌 PLAYER 2 QUIZ 💌</h2>
+  <p>À quel point tu me connais ? 🎮</p>
+
+  <h3 id="questionAmour"></h3>
+  <div id="reponsesAmour"></div>
+  <p id="scoreAmour"></p>
+
+  <button onclick="demarrerQuizAmour()">
+    ↻ RECOMMENCER
+  </button>
+
+  <button onclick="showScreen('menu')">
+    ↩ RETOUR
+  </button>
+</section>
+
+<section id="connais" class="screen">
+  <h2>💌 PLAYER 2 QUIZ 💌</h2>
+  <p>À quel point tu me connais ? 🎮</p>
+
+  <h3 id="questionAmour"></h3>
+  <div id="reponsesAmour"></div>
+  <p id="scoreAmour"></p>
+
+  <button onclick="demarrerQuizAmour()">
+    ↻ RECOMMENCER
+  </button>
+
+  <button onclick="showScreen('menu')">
+    ↩ RETOUR
+  </button>
+</section>
+
+const questionsAmour = [
+  {
+    question: "Quelle est ma soirée idéale ? 💕",
+    reponses: ["Un film ensemble", "Une soirée seule", "Faire du sport"],
+    bonne: 0
+  },
+  {
+    question: "Quel cadeau me ferait le plus plaisir ? 🎁",
+    reponses: ["Un moment avec toi", "Une voiture", "Une console"],
+    bonne: 0
+  },
+  {
+    question: "Qu'est-ce que je préfère ? 💗",
+    reponses: ["Les câlins", "Les disputes", "Les devoirs"],
+    bonne: 0
+  },
+  {
+    question: "Quel est mon endroit préféré ? 🌷",
+    reponses: ["Avec toi", "Au supermarché", "Dans le bus"],
+    bonne: 0
+  }
+];
+
+let questionActuelle = 0;
+let scoreQuizAmour = 0;
+
+function demarrerQuizAmour() {
+  questionActuelle = 0;
+  scoreQuizAmour = 0;
+  afficherQuestionAmour();
+}
+
+function afficherQuestionAmour() {
+  const zone = document.getElementById("reponsesAmour");
+  const titre = document.getElementById("questionAmour");
+  const score = document.getElementById("scoreAmour");
+
+  zone.innerHTML = "";
+
+  if (questionActuelle >= questionsAmour.length) {
+    titre.textContent = "LEVEL COMPLETE ! 💗";
+    score.textContent =
+      "Ton score : " + scoreQuizAmour +
+      " / 4 ❤️ Je t'aime !";
+    return;
+  }
+
+  const q = questionsAmour[questionActuelle];
+  titre.textContent = q.question;
+  score.textContent =
+    "QUESTION " + (questionActuelle + 1) + " / 4";
+
+  q.reponses.forEach((reponse, index) => {
+    const bouton = document.createElement("button");
+    bouton.textContent = reponse;
+
+    bouton.onclick = function() {
+      if (index === q.bonne) scoreQuizAmour++;
+      questionActuelle++;
+      afficherQuestionAmour();
+    };
+
+    zone.appendChild(bouton);
+  });
+}
+
+demarrerQuizAmour();
 </script>
   
 
