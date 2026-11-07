@@ -153,18 +153,32 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
   <button class="secondary" onclick="show('menu')">← MENU</button>
 </section>
 
-<!-- SURPRISE -->
+<!-- SECRET LEVEL -->
 <section id="secret" class="screen">
-  <h1 class="pixel">SECRET UNLOCKED</h1>
+  <h1 class="pixel">SECRET LEVEL</h1>
+  <p class="small">★ CONGRATULATIONS PLAYER 2 ★</p>
+
   <div class="card">
-    <div class="heart">💖</div>
-    <p class="pixel small">YOU FOUND MY SECRET!</p>
-    <h2>Tu es ma personne préférée.</h2>
-    <p>Et si je pouvais recommencer cette aventure mille fois, je te choisirais encore. ♡</p>
-    <p>GAME COMPLETED ♥</p>
+    <div style="font-size:75px">🎁</div>
+    <h2 class="pixel">YOU FOUND THE TREASURE!</h2>
+    <p>Tu as réussi à trouver notre petit niveau secret...</p>
+    <p>Mais ton cadeau n'est pas encore ouvert !</p>
+    <button onclick="revealSecret()">🎀 OPEN MY GIFT</button>
+
+    <div id="giftContent" style="display:none">
+      <div class="heart">💗</div>
+      <h2>YOU ARE MY FAVORITE PERSON</h2>
+      <p>Parmi tous les joueurs de ce monde, c'est toi que je choisirais à chaque partie.</p>
+      <p>Merci pour tous nos souvenirs, nos fous rires et tous les moments à venir.</p>
+      <p class="pixel small">ACHIEVEMENT UNLOCKED</p>
+      <p>🏆 MY FAVORITE HUMAN 🏆</p>
+      <div style="font-size:35px">💗🌸💗🌸💗</div>
+    </div>
   </div>
-  <button onclick="show('menu')">← MENU</button>
+
+  <button class="secondary" onclick="show('menu')">← BACK TO MENU</button>
 </section>
+
 
 <footer>LOVE.exe · VERSION 1.0 · MADE WITH ♡</footer>
 
