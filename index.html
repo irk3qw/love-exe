@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -58,7 +57,7 @@ button:active{transform:scale(.96)}
   display:grid;place-items:center;cursor:pointer;
 }
 .tile.open{background:#714b80}
-#secret{display:none}
+/* Le niveau secret reste cache par la classe .screen */
 input{padding:12px;border-radius:8px;border:2px solid var(--pink);width:100%;font-size:16px}
 footer{padding:25px;color:#c9afd8;font-size:11px}
 @media(max-width:430px){
@@ -226,23 +225,6 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
     ↩ RETOUR
   </button>
 </section>
-
-<section id="connais" class="screen">
-  <h2>💌 PLAYER 2 QUIZ 💌</h2>
-  <p>À quel point tu me connais ? 🎮</p>
-
-  <h3 id="questionAmour"></h3>
-  <div id="reponsesAmour"></div>
-  <p id="scoreAmour"></p>
-
-  <button onclick="demarrerQuizAmour()">
-    ↻ RECOMMENCER
-  </button>
-
-  <button onclick="showScreen('menu')">
-    ↩ RETOUR
-  </button>
-</section>
 <footer>LOVE.exe · VERSION 1.0 · MADE WITH ♡</footer>
 
 <script>
@@ -262,11 +244,13 @@ function show(id) {
   document.querySelectorAll('.screen').forEach(s => {
     s.classList.remove('active');
   });
-  document.getElementById(id).classList.add('active');
+  const destination = document.getElementById(id);
+  if (destination) destination.classList.add('active');
 }
 
 function showScreen(id) {
   show(id);
+  if (id === "connais") demarrerQuizAmour();
 }
 
 function showSecret(){
@@ -489,3 +473,4 @@ demarrerQuizAmour();
 
 </body>
 </html>
+
