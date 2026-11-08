@@ -156,7 +156,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
     <h1 class="pixel lock-heading">ACCESS LOCKED</h1>
     <p class="pixel small">PLAYER 2 IDENTIFICATION</p>
     <p>Entre le mot secret pour commencer l'aventure 💗</p>
-    <form onsubmit="unlockLove(event)">
+    <form id="loveAccessForm">
       <input class="lock-input" id="lovePassword" type="password" placeholder="PASSWORD" autocomplete="off" aria-label="Mot de passe" required>
       <button type="submit">▶ UNLOCK LOVE.exe</button>
     </form>
@@ -164,6 +164,46 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
     <p class="small">Indice : ton petit surnom 💌</p>
   </div>
 </section>
+<script>
+/* Déverrouillage autonome : fonctionne même si un autre mini-jeu a une erreur JS. */
+(function(){
+ const form=document.getElementById('loveAccessForm');
+ const field=document.getElementById('lovePassword');
+ const status=document.getElementById('lockStatus');
+ form.addEventListener('submit',function(e){
+   e.preventDefault();
+   if(field.value.trim().toLowerCase()!=='pookie'){
+     status.textContent='💔 ACCESS DENIED — TRY AGAIN';
+     return;
+   }
+   status.textContent='💚 ACCESS GRANTED 💚';
+   field.value='';
+   try { loveAccessGranted=true; } catch(err) { window.loveAccessGranted=true; }
+   const access=document.getElementById('access');
+   const loading=document.getElementById('loveLoading');
+   const home=document.getElementById('home');
+   if(access)access.classList.remove('active');
+   if(loading){
+     loading.classList.add('active');
+     const percent=document.getElementById('loadingPercent');
+     const message=document.getElementById('loadingMessage');
+     let count=0;
+     const timer=setInterval(function(){
+       count=Math.min(100,count+2);
+       if(percent)percent.textContent=count+'%';
+       if(message&&count>=76)message.textContent='♡ BIG PIXEL HUG! ♡';
+       if(count>=100){
+         clearInterval(timer);
+         setTimeout(function(){
+           loading.classList.remove('active');
+           if(home)home.classList.add('active');
+         },850);
+       }
+     },120);
+   }else if(home){home.classList.add('active');}
+ });
+})();
+</script>
 
 
 <!-- CINEMATIQUE DE CHARGEMENT : deux personnages chibi se retrouvent -->
@@ -241,7 +281,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 
 <section id="photos" class="screen">
   <h2>📸 NOS SOUVENIRS</h2>
-  <p>Some moments of us</p>
+  <p>Quelques moments avec toi 💗</p>
 
   <div style="background:#fff; color:#473050; padding:15px; max-width:300px; margin:20px auto; transform:rotate(-2deg); box-shadow:6px 6px 0 #a46bba;">
     <img id="souvenirPhoto" src="photo1.jpg" alt="Notre souvenir" style="width:100%; display:block;">
@@ -291,7 +331,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
   <div id="giftContent" style="display:none;max-width:620px;margin:20px auto;background:#fff1f4;color:#472c50;border:3px solid #ff8fbd;border-radius:15px;padding:24px;line-height:1.8">
    <h2 class="pixel" style="color:#ae568c">💌 TO MY PLAYER 2 ♡</h2>
    <p><b>ACHIEVEMENT UNLOCKED: YOU FOUND MY HEART 💗</b></p>
-   <p>Ma pookiiiie,</p>
+   <p>Mon amour,</p>
    <p>Si tu lis cette lettre, c'est que tu as réussi à me retrouver, même à travers tous ces labyrinthes.</p>
    <p>Et tu sais quoi ? Dans la vraie vie, je suis tellement heureuse qu'on se soit trouvés aussi.</p>
    <p>J'ai créé ce petit jeu pour toi parce que ça me fait plaisir et c'est fun!</p>
@@ -337,7 +377,7 @@ footer{padding:25px;color:#c9afd8;font-size:11px}
 
 <section id="retrouve" class="screen">
   <h2>🧩 RETROUVE-MOI ! 💗</h2>
-  <p>Une aventure en 3 niveaux pour retrouver ta pookie !</p>
+  <p>Une aventure en 3 niveaux pour retrouver ton amoureuse !</p>
   <div class="card maze-card">
     <div class="maze-levelbar" id="mazeLevels"><span class="on">🌸 JARDIN</span><span>🌙 NUIT</span><span>💎 CHÂTEAU</span></div>
     <div class="maze-hud">
@@ -365,7 +405,7 @@ const startDate = "2025-08-27"; // Remplace par votre date de rencontre
 const questions = [
  {q:"Qu'es-ce que je préfère chez toi ?",a:["Ton sourire","Tes yeux","Le fait que tu es bientôt chauve","Your fat-assss"],correct:0},
  {q:"Quel est le premier film qu'on regardé tout les deux ?",a:["FNAF","Zoolander","Carrie","Panique au village!"],correct:2},
- {q:"Qui a fait le premier pas ?",a:["Toi","Moi (fais gaffe à ce que tu réponds)","Les deux"],correct:1},
+ {q:"Qui a fait le premier pas ?",a:["Toi","Moi (fais gaffe à ce que tu réponds)","Les deux"],correct:2},
  {q:"Quel est mon moment préféré ?",a:["Nos conversations","Nos rendez-vous","Nos fous rires","Tous les moments avec toi"],correct:3},
 ];
 
@@ -407,7 +447,7 @@ function startLoveLoading() {
   loadingTimer = setInterval(() => {
     const progress = Math.min(100, Math.round((performance.now() - start) / 7000 * 100));
     percent.textContent = progress + '%';
-    if (progress >= 76) message.textContent = '♡ BIG HUG! ♡';
+    if (progress >= 76) message.textContent = '♡ BIG PIXEL HUG! ♡';
     if (progress === 100) {
       clearInterval(loadingTimer);
       setTimeout(() => show('home'), 1100);
@@ -561,7 +601,7 @@ const cadeauxLove = [
   "🧸 BON POUR UN GROS CÂLIN !",
   "🍿 UNE SOIRÉE FILM EN AMOUREUX !",
   "💆 BON POUR UN MASSAGE !",
-  "🍕 UN DATE DE TON CHOIX !",
+  "🍕 UN DATE PIZZA AVEC MOI !",
   "❤️ UN JE T'AIME INFINI !",
   "🎮 UNE SOIRÉE GAMING ENSEMBLE !"
 ];
@@ -696,7 +736,7 @@ function moveMaze(dx,dy){
  if(mazeHearts.delete(k))msg='💗 Un cœur récupéré ! Encore '+mazeHearts.size+' à trouver !';
  if(k===mazeKeyPos){mazeHasKey=true;mazeKeyPos='';msg='🗝️ Tu as trouvé la clé !';}
  if(mazeTraps.delete(k)){mazePlayer={x:1,y:1};msg='⚡ OUPS ! Tu as exploré un détour piégé ! Retour au départ, mais tu gardes tes cœurs et ta clé 💗';}
- if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN D'AMOUR A LA POOKIE ! 💗';
+ if(k===mazeEnd){mazeFinished=true;msg='💞 VOUS VOUS ÊTES RETROUVÉS ! 🫂 GROS CÂLIN PIXEL ! 💗';
  mazeHugTimer=setTimeout(()=>{if(!document.getElementById('retrouve').classList.contains('active'))return;
  if(mazeLevel<MAZE_LEVELS.length-1){document.getElementById('mazeMessage').textContent='💌 Niveau terminé ! Le prochain commence…';mazeHugTimer=setTimeout(()=>startMaze(mazeLevel+1),1300);}
  else {unlocked=true;document.getElementById('mazeMessage').innerHTML='🏆 LOVE QUEST COMPLETE ! 💗<br>♡ TOGETHER FOREVER ♡<br>💌 Le cadeau final est débloqué !';setTimeout(()=>show('secret'),1700);}
